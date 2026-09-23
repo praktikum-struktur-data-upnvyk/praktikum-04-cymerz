@@ -89,22 +89,78 @@ void tutupSemuaTab(CNode*& head) {
 
 // SOAL 1
 bool bukaHalaman(DNode*& head, DNode*& tail, int nomor) {
-    return false;
+    DNode* baru = new DNode;
+    baru->data = nomor;
+    baru->prev = tail;
+    baru->next = nullptr;
+
+    if (tail != nullptr) {
+        tail->next = baru;
+    } else {
+        head = baru;
+    }
+    tail = baru;
+    return true;
 }
 
 // SOAL 2
 int riwayatMundur(DNode* tail, int* keluaran) {
-    return 0;
+    DNode* bantu = tail;
+    int n = 0;
+    while (bantu != nullptr) {
+        keluaran[n] = bantu->data;
+        n++;
+        bantu = bantu->prev;
+    }
+
+    return n;
 }
 
 // SOAL 3
 bool hapusHalaman(DNode*& head, DNode*& tail, int nomor) {
+    DNode* bantu = head;
+    while (bantu != nullptr) {
+        if (bantu->data == nomor) {
+            if (bantu->prev != nullptr) {
+                bantu->prev->next = bantu->next;
+            } else {
+                head = bantu->next;
+            }
+
+            if (bantu->next != nullptr) {
+                bantu->next->prev = bantu->prev;
+            } else {
+                tail = bantu->prev;
+            }
+
+            delete bantu;
+            return true;
+        }
+        bantu = bantu->next;
+    }
     return false;
 }
 
 // SOAL 4
 bool bukaTab(CNode*& head, int nomor) {
-    return false;
+    CNode* baru = new CNode;
+    baru->data = nomor;
+
+    if (head == nullptr) {
+        head = baru;
+        baru->next = head;
+        return true;
+    }
+
+    CNode* temp = head;
+
+    while (temp->next != head) {
+        temp = temp->next;
+    }
+
+    temp->next = baru;
+    baru->next = head;
+    return true;
 }
 
 // =============================================================================
